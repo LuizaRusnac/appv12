@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Player</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .left-button {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .right-button {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const video = document.querySelector("video");
+            const leftButton = document.querySelector(".left-button");
+            const rightButton = document.querySelector(".right-button");
+            
+            // Autoplay the video
+            video.load();
+            video.play().catch(function() {
+                    console.log("Video playback failed.");
+            
+            // Hide buttons and change video source on button click
+            leftButton.addEventListener("click", function(event) {
+                event.preventDefault();
+                leftButton.classList.add("hidden");
+                rightButton.classList.add("hidden");
+                video.pause();
+                video.src = "static/IMG_8072.mp4"; // Change the video source
+                video.load();
+                video.play().catch(function() {
+                    console.log("Video playback failed.");
+                });
+            });
+            
+            rightButton.addEventListener("click", function(event) {
+                event.preventDefault();
+                leftButton.classList.add("hidden");
+                rightButton.classList.add("hidden");
+                video.pause();
+                video.src = "static/IMG_8071.mp4"; // Change the video source
+                video.load();
+                video.play().catch(function() {
+                    console.log("Video playback failed.");
+                });
+            });
+        });
+    </script>
+</head>
+<body>   
+    <div class="video-container">
+        <video controls autoplay="true">
+            <source src="{{ current_video_url }}" type="video/mp4">
+        </video>
+        
+        <form method="POST" class="left-button">
+            <button type="submit" name="video_url" value="static/IMG_8072.mp4">Left</button>
+        </form>
+        
+        <form method="POST" class="right-button">
+            <button type="submit" name="video_url" value="static/IMG_8071.mp4">Right</button>
+        </form>
+    </div>
+</body>
+</html>
